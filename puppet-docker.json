@@ -1,0 +1,23 @@
+{
+  "name": "Dockerized Puppet",
+  "description": "A Puppet Server stack in containers",
+  "courseware-metadata": {
+    "title": "Dockerized Puppet",
+    "subtitle": "A Puppet Server stack in containers",
+    "department": "infrastructure",
+    "version": "1.0"
+  },
+  "favicon": "file/_images-base/favicon.ico",
+  "protected": [
+    "presenter",
+    "onepage",
+    "supplemental",
+    "print"
+  ],
+  "user": "puppet",
+  "password": "docker",
+  "version": "0.19.3",
+  "sections": [
+    "Dockerized"
+  ]
+}
