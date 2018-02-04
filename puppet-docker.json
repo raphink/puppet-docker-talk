@@ -9,10 +9,7 @@
   },
   "favicon": "file/_images-base/favicon.ico",
   "protected": [
-    "presenter",
-    "onepage",
-    "supplemental",
-    "print"
+    "presenter"
   ],
   "user": "puppet",
   "password": "docker",
