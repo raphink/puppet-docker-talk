@@ -25,7 +25,7 @@ services:
     image: 'camptocamp/puppetserver:2.7.2-5'
     environment:
       JAVA_ARGS: '-Xmx2g -Xms2g -XX:MaxPermSize=256m -XX:OnOutOfMemoryError="kill -9 %p" -Djava.security.egd=/dev/urandom'
-      AUTOSIGN_PSK: 'HelloGent'
+      AUTOSIGN_PSK: 'HelloGhent'
     hostname: 'master.c2c'
     ports:
       - '8140:8140'
