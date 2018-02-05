@@ -69,3 +69,6 @@ Two options:
   visualize the diffs
 * images: `camptocamp/puppet-catalog-diff` and
   `camptocamp/puppet-catalog-diff-viewer`
+
+
+![Puppet Catalog Diff](../_images/puppet-catalog-diff-viewer.png)
