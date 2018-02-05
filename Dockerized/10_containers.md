@@ -59,6 +59,8 @@ Two options:
 * function: provide a web interface to visualize PuppetDB data and reports
 * image: `camptocamp/puppetboard`
 
+![Puppetboard](../_images/puppetboard.png)
+
 
 !SLIDE
 ## Containers: Puppet Catalog Diff
