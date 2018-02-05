@@ -40,10 +40,14 @@ Two options:
 
 
 !SLIDE
-## Containers: PuppetCA/MCollective
+## Containers: MCollective helpers
 
-* function: pilot Puppet CA from outside the stack using MCollective
-* image: `camptocamp/mcollectived_puppetca`
+* function: pilot Puppet CA and PuppetDB from outside the stack using MCollective
+* images: `camptocamp/mcollectived-puppetca` and
+  `camptocamp/mcollectived-node`
+* Now fully automated using Terraform with
+  [PuppetCA](https://github.com/camptocamp/terraform-provider-puppetca)
+  and [PuppetDB](https://github.com/camptocamp/terraform-provider-puppetdb) providers
 
 
 
