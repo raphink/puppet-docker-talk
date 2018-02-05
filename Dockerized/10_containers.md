@@ -50,6 +50,8 @@ Two options:
   and [PuppetDB](https://github.com/camptocamp/terraform-provider-puppetdb) providers
 
 
+![Choria](../_images/choria.png)
+
 
 !SLIDE
 ## Containers: Puppetboard
