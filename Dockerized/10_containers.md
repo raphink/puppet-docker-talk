@@ -19,7 +19,7 @@ Two options:
 
 * single node:
 
-   - image: `camptocamp/r10k-githook` (with a Git hook)
+   - image: `camptocamp/r10k-githook` (sshd with a Git hook)
 
 * cluster of nodes:
 
