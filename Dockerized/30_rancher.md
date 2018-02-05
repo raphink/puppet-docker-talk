@@ -24,7 +24,7 @@ resource "rancher_stack" "puppet" {
   environment {
     "ACTIVEMQ_DNS_ALT_NAMES"       = "activemq.example.com"
     "AUTH_CONF_ALLOW_CATALOG"      = "catalog_diff"
-    "AUTOSIGN_PSK"                 = "HelloGentPSK"
+    "AUTOSIGN_PSK"                 = "HelloGhentPSK"
     "CA_CRT"                       = "${file("puppet/ca.crt")}"
     "CA_DNS_ALT_NAMES"             = "puppetca,puppetca.example.com"
     "CA_KEY"                       = "${file("puppet/ca.key")}"
@@ -38,15 +38,15 @@ resource "rancher_stack" "puppet" {
     "PUPPETBOARD_TAG"              = "0.2.0-1"
     "PUPPETCA_JAVA_ARGS"           = "-XX:OnOutOfMemoryError=\"kill -9 %p\" -Djava.security.egd=/dev/urandom -Xmx2g -Xms2g -XX:MaxPermSize=256m"
     "PUPPETDB_JAVA_ARGS"           = "-XX:OnOutOfMemoryError=\"kill -9 %p\" -Djava.security.egd=/dev/urandom -Xmx1g"
-    "PUPPETDB_POSTGRES_PASSWORD"   = "PostgresGentPass"
+    "PUPPETDB_POSTGRES_PASSWORD"   = "PostgresGhentPass"
     "PUPPETDB_POSTGRES_RO_SUBNAME" = "//postgresql:5433/puppetdb"
     "PUPPETDB_POSTGRES_SERVICE"    = "postgres-cluster/lb"
     "PUPPETDB_POSTGRES_USER"       = "puppetdb"
     "PUPPET_JAVA_ARGS"             = "-XX:OnOutOfMemoryError=\"kill -9 %p\" -Djava.security.egd=/dev/urandom -Xmx4g -Xms4g -XX:MaxPermSize=256m"
     "R10K_REMOTE"                  = "ssh://git@git.example.com/infra/control-repo.git"
     "RSA_PRIVATE_KEY"              = "${file("puppet/r10k_rsa.key")}"
-    "STOMP_PASSWORD"               = "StompGentPass"
-    "WEBHOOK_SECRET"               = "WebhookGentSec"
+    "STOMP_PASSWORD"               = "StompGhentPass"
+    "WEBHOOK_SECRET"               = "WebhookGhentSec"
   }
 }
 ```
