@@ -1,0 +1,769 @@
+/* Fonts */
+
+@media screen {
+    body, html {
+        height:100%;
+    }
+
+    body > #preso,
+    body > #preso > .slide {
+/* Allows the height to vary by a handful of pixels based on what browser chrome is visible. */
+        height: 100%;
+
+/* static heights to fit different browser configurations. Safari values. */
+/*      height: 706px;    /* allows room for the tab bar and status bar */
+/*      height: 728px;    /* allows room for the status bar only */
+/*      height: 744px;    /* allows room for neither bar */
+    }
+}
+
+@media all {
+    /* branding */
+    body {
+        font-family: 'Gotham Book', Arial, sans-serif;
+        background-color: #f5f5f5;
+        font-size: 62.5%;
+        color: #7A7F82;
+    }
+
+    a {
+      text-decoration: none;
+      color: #EA7730;
+    }
+
+    code {
+        font-family: 'Inconsolata', Courier, monospace;
+    }
+
+    /* Adjust code size in lists */
+    li > pre > code {
+      font-size: 70%;
+    }
+
+    /* why so center aligned? */
+    .content > p,
+    .content li {
+        text-align: left !important;
+    }
+
+    /* color bullets */
+    .content ul,
+    .notes ul,
+    .handouts ul {
+      list-style: none;
+    }
+
+    .content ul {
+      padding: 0;
+      margin: 0;
+    }
+
+    .content ul > li:before,
+    .notes ul > li:before,
+    .handouts ul > li:before {
+      content: '\25A0';
+      padding-right: 0.5em;
+      color: #FF680A;
+    }
+
+
+    /* Quiz */
+    .content div.form.element {
+      font-size: 1em;
+      width: auto;
+      /* Align with lists */
+      margin: .5em;
+      padding: .25em;
+    }
+
+    .content div.form.element:before {
+      content: '\25A0';
+      padding-right: 0.5em;
+      color: #FF680A;
+    }
+
+    .content div.form.element ul > li:before {
+      content: '';
+    }
+
+    /* 2nd level */
+    .content ul > li > ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .content ul > li > ul > li:before {
+      content: '\25CB';
+      padding-left: 0.5em;
+      padding-right: 0.5em;
+      color: #FF680A;
+    }
+
+    /* No line break for p in li */
+    .content li > p {
+      display: inline;
+    }
+
+    /* but put the images back to center. Assumes that images will always be block. */
+    .content > p > img {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
+    }
+
+
+    .content li > ol,
+    .content li > ul {
+        font-size: 100%;
+    }
+
+    .content {
+        margin-top: 0 !important;  /* Places the slide title consistently. Not vertically centered. */
+        margin-left: 1em;
+        margin-right: 3em;
+        font-size: 1.1em;
+    }
+
+    .content.subsection {
+      margin: 0;
+    }
+
+    .content h2 {
+	    font-family: 'Gotham Medium', Arial, sans-serif;
+	    font-size: 3em;
+      text-align: left;
+      /* text-transform: uppercase; */
+      color: #FF680A;
+    }
+
+    h1 {
+      border-bottom: none !important;
+    }
+
+    .subsection h1, .proposed_solutions h1 {
+	    font-family: 'Gotham Medium', Arial, sans-serif;
+      text-align: center;
+      text-transform: uppercase;
+      color: white;
+      width: 100%;
+      font-size: 3em;
+      background-color: #FF680A;
+      padding: 10px;
+    }
+
+    .cover h1, .cover h2 {
+	    font-family: 'Gotham Medium', Arial, sans-serif;
+      margin-left: 1in;
+      text-transform: uppercase;
+    }
+
+    #footer {
+      background: url('_images-base/camptocamp_200.png') left no-repeat;
+      width: 1000px;
+      left: calc((100% - 1024px)/2);
+      text-align: right;
+      height: 30px;
+      line-height: 30px;
+      display: block;
+      box-shadow: none;
+      -webkit-box-shadow: none;
+    }
+
+    #footer .container {
+        border: none;
+    }
+
+    #footer #followLabel {
+        display: none;
+    }
+
+    #slideInfo:after {
+      background: url('_images-base/mountain.png') top right no-repeat;
+      background-size: 15px 15px;
+      margin-left: 5px;
+      content: "        ";
+    }
+
+    #slideInfo:before {
+      content: "www.camptocamp.com /";
+      margin-right: 330px;
+    }
+
+    .content h3 {
+	    font-size: 2em;
+      text-align: left;
+      color: #7A7F82;
+    }
+
+    .center h3 {
+      text-align: center;
+    }
+
+    .content h4 {
+	    font-size: 1.5em;
+      margin: 20px 0 0 10px;
+    }
+
+    .content > ul, .content > p {
+	    font-size: 1.6em;
+    }
+
+    .lesson > h3 {
+	    font-weight: bold !important;
+	    text-transform: uppercase;
+    }
+
+    /* why is this being set explicitly? */
+    .slide .center {
+        width: 1024px;
+    }
+
+    /* Add some nice styling to the code blocks. */
+    .content pre {
+        border: 2px solid #ddd;
+        padding: 0.5em;
+        overflow: hidden;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -khtml-border-radius: 10px;
+        border-radius: 3px;
+    }
+
+    /* if needed, we can scroll to view */
+    .content pre.code_scrolled {
+        overflow: auto;
+    }
+
+    /* or wrap the text */
+    .content pre.code_wrap {
+        white-space: pre-wrap; /* css-3 */
+        white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+        white-space: -pre-wrap; /* Opera 4-6 */
+        white-space: -o-pre-wrap; /* Opera 7 */
+        word-wrap: break-word; /* Internet Explorer 5.5+ */
+    }
+
+    /*   text size */
+    .content pre.code_  {
+        font-size: 120%;
+    }
+
+    /* centered code window */
+    .content pre.code_center {
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .content pre code {
+        background-color: white;
+    }
+
+    /* add shell inverse color so we can visually identify code. */
+    pre.highlight code.language-shell {
+        background-color: black;
+        color: white;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+        -khtml-border-radius: 0;
+        border-radius: 0;
+    }
+
+    /* add classes for forge results */
+    .content pre.forge {
+        font-family: 'Inconsolata', Courier, monospace;
+    }
+    .content pre.forge span.hit {
+        color: #81ff26;
+    }
+    .content pre.forge span.version {
+        color: cyan;
+    }
+
+    /* do we need to fiddle with the size? */
+    .content > pre {
+       font-size: 120%;
+    }
+
+    /* make the menu less broken */
+    a.fg-button, div.fg-menu-container {
+        font-size: 0.7em;
+    }
+
+    /* remove some gratuitous whitespace */
+    .content li {
+        padding: .25em;
+    }
+
+    /* this is a hacky fix to a silly problem. If you put a code snippet directly after a list, things
+      get boogered up. We had previously been using ` ` to break the lines, but that causes other issues,
+      specifically with printing. Instead, use this style and put a line like ".break some text". */
+    p.break {
+        display: none;
+    }
+
+    /* I'm using this style for word definitions. */
+    /* Markdown doesn't seem to give you a way to define & use classes. */
+    p.define {
+        border: 1px solid #efefef;
+        border-left: 5px solid #ccc;
+        margin-left: 15px;
+        padding: 5px;
+        background: #fefefe;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -khtml-border-radius: 10px;
+        border-radius: 10px;
+        background: white url('_images-base/Book_text.svg')  no-repeat 10px 10px;
+        padding-left: 50px;
+    }
+    p.define:first-line {
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+    p.define_oneline {
+        border: 1px solid #efefef;
+        border-left: 5px solid #ccc;
+        margin-left: 15px;
+        padding: 5px;
+        background: #fefefe;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -khtml-border-radius: 10px;
+        border-radius: 10px;
+        background: white url('_images-base/Book_text.svg')  no-repeat 10px 10px;
+        padding-left: 50px;
+    }
+
+    /* table styling */
+    /* first fix sizes for   and   slide styles */
+    .content.  table {
+        font-size: 2em;
+    }
+    .content.  table {
+        font-size: 1.5em;
+    }
+
+    /* default to full width */
+    .content table {
+        width: 100%;
+    }
+
+    /* now add gussied up chart style */
+    table.chart {
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse:collapse;
+        width: 80%;
+        border: 1px solid #999;
+    }
+
+    table.chart th {
+        padding: 0.5em;
+        background-color: #E6E6E6;
+        color: #FF680A;
+        text-transform: uppercase;
+        border-right: 1px solid #999;
+        border-bottom: 2px solid #999;
+    }
+
+    table.chart tr td {
+        padding: 0.5em;
+        border-right: 1px solid #999;
+        border-top: 1px solid #999;
+    }
+
+    table.chart tr td:first-child {
+        text-align: left;
+        width: 100px;
+        font-weight: bold;
+        color: #FF680A;
+        border-left: 1px solid #999;
+    }
+
+    /* layout & background for exercises and labs */
+    .content.exercise h2:last-of-type {
+	    background: white url('_images-base/exercise.png') no-repeat top right;
+	    height: 100px;
+      padding-right: 100px;
+    }
+
+    .content.lab h2:last-of-type {
+      background: white url('_images-base/lab.png') no-repeat top right;
+      height: 100px;
+      padding-right: 100px;
+    }
+
+    .content.demo h2:last-of-type {
+      background: white url('_images-base/demo.png') no-repeat top right;
+      height: 100px;
+      padding-right: 100px;
+    }
+
+    .content.exercise h2,
+    .content.lab h2,
+    .content.demo h2 {
+        text-align: left;
+        font-size: 3em;
+    }
+
+    .content.exercise h3,
+    .content.lab h3,
+    .content.demo h3 {
+        text-align: left;
+        font-size: 1.5em;
+        margin-top: 20px;
+    }
+
+    .content.exercise > ul > li,
+    .content.lab > ul > li,
+    .content.demo > ul > li {
+        font-weight: bold;
+    }
+
+    .content.exercise > ul > li > ul,
+    .content.lab > ul > li > ul,
+    .content.demo > ul > li > ul {
+        font-weight: normal;
+        margin-right: 4em;
+    }
+
+    .slide .center {
+      -webkit-transform: none;
+      transform: none;
+    }
+
+    body#download {
+      font-size: 100%;
+    }
+
+    #hamburger {
+      opacity: 0.40;
+    }
+
+
+    .tools {
+      position: relative;
+      margin: 20px 0 0 40px;
+      bottom: 0;
+      right: 0;
+    }
+
+    .tools input[type=submit] {
+      font-size: 0.8em;
+      height: auto;
+      padding: 10px;
+    }
+
+    #timerSection,
+    #statusbar,
+    #questions,
+    #notes,
+    #topbar,
+    #presenterPopup {
+	    font-size: 1.5em !important;
+    }
+}
+
+/* print formatting */
+@page {
+  size: A4;
+/*  margin: 0.45in 0; */
+  margin: 1in 0in 0.6in 0in;
+  orphans: 3;
+  widows: 3;
+
+  @top-center {
+    margin-top: 0.5in;
+  	padding-top: 0.5em;
+    border-bottom: 1px solid #FF680A;
+  }
+
+  @top-left {
+    background: url('_images-base/camptocamp.png') left no-repeat;
+    background-size: 200px;
+    content: " ";
+    width: 90%;
+    margin-left: 0.4in;
+    margin-top: 0.5in;
+  	padding-top: 0.5em;
+    border-bottom: 1px solid #FF680A;
+  }
+
+  @top-right {
+    background: url('_images/department_logo.png') right no-repeat;
+    background-size: 150px;
+    content: " ";
+    width: 90%;
+    margin-right: 0.4in;
+    margin-top: 0.5in;
+  	padding-top: 0.5em;
+    border-bottom: 1px solid #FF680A;
+  }
+
+  @bottom-left {
+    border-top: 1px solid #FF680A;
+    vertical-align: top;
+    font-size: xx-small;
+    margin-left: 0.4in;
+  }
+
+  @bottom-center {
+    border-top: 1px solid #FF680A;
+    content: string(doctitle);
+    width: 90%;
+    font-family: 'Gotham Light' !important;
+    vertical-align: top;
+    font-size: xx-small;
+    color: #FF680A;
+  }
+
+  @bottom-right {
+    border-top: 1px solid #FF680A;
+    vertical-align: top;
+    font-size: xx-small;
+    margin-right: 0.4in;
+  }
+}
+
+@page:left {
+  margin-right: 0.2in;
+
+  @bottom-left {
+    content: counter(page) "/" counter(pages);
+    width: 90%;
+    font-family: 'Gotham Light' !important;
+    color: #FF680A;
+  }
+
+  @bottom-right {
+    content: string(copyright);
+    width: 90%;
+    font-family: 'Gotham Medium' !important;
+    font-weight: bold;
+    color: #FF680A;
+  }
+}
+
+@page:right {
+  margin-left: 0.2in;
+
+  @bottom-left {
+    content: string(copyright);
+    width: 90%;
+    font-family: 'Gotham Medium' !important;
+    font-weight: bold;
+    color: #FF680A;
+  }
+
+  @bottom-right {
+    content: counter(page) "/" counter(pages);
+    font-family: 'Gotham Light' !important;
+    color: #FF680A;
+  }
+}
+
+
+@page appendix:left {
+  @bottom-left {
+    content: counter(page, lower-roman) "/" counter(pages, lower-roman);
+    font-family: 'Gotham Light' !important;
+    color: #FF680A;
+  }
+}
+
+@page appendix:right {
+  @bottom-right {
+    content: counter(page, lower-roman) "/" counter(pages, lower-roman);
+    font-family: 'Gotham Light' !important;
+    color: #FF680A;
+  }
+}
+
+@media print {
+  /* Do not display cover in onepage */
+  div.cover { display: none !important; }
+
+  /* branding */
+  body {
+    font-family: 'Gotham Book' !important;
+    background: none;
+    color: black;
+  }
+
+  h1 {
+	  font-size: 2em !important;
+	  font-family: 'Gotham Medium' !important;
+  }
+
+  h2 {
+	  font-size: 2em !important;
+	  font-family: 'Gotham Book' !important;
+  }
+
+  h3 {
+	  font-size: 1.5em !important;
+	  font-family: 'Gotham Book' !important;
+  }
+
+  h4, h5, h6 {
+    font-family: 'Gotham Book' !important;
+    font-size: 1.3em !important;
+  }
+
+  .content > p, .content > ul {
+	  font-size: 1.2em !important;
+  }
+
+  .content > pre {
+       font-size: 80% !important;
+   }
+
+  .content.exercise > h1:last-of-type {
+  	background: white url('_images-base/exercise-sm.png') no-repeat top right;
+  	height: 50px;
+  }
+
+  .content.lab > h1:last-of-type {
+    background: white url('_images-base/lab-sm.png') no-repeat top right;
+    height: 50px;
+  }
+
+  .content.demo > h1:last-of-type {
+    background: white url('_images-base/demo-sm.png') no-repeat top right;
+    height: 50px;
+  }
+
+  .slide {
+    /* use /onepage because wkthmltopdf isn't that great */
+    max-height: inherit !important;
+    height: auto !important;
+    padding: 0.5em;
+    width: 8.1in !important;
+  }
+
+  img {
+    max-width: 7in !important;
+  }
+
+  /* why does he unset all this and never reset it? Argh! */
+  ul {
+    list-style: disc;
+  }
+
+  /* Hide annotations canvas */
+  canvas.annotations {
+    display: none;
+  }
+
+  /* Do not show presenter notes */
+  div.notes {
+    display: none;
+  }
+
+  /* Styling to make the handout notes appear in the printed output. */
+  div.handouts {
+    display: block !important;
+    margin: 0 1em;
+    border-top: 2px dashed #999;
+  }
+
+  /* prepend the first element of the .handouts div with Notes: */
+  div.handouts > :first-child:before {
+    content: "Notes:";
+    font-weight: bold;
+    display: block;
+    padding: 1em 0.5em 0.5em 0;
+  }
+
+  div.handouts * {
+    font-size: 12pt !important;
+  }
+
+  div.handouts p {
+    padding-top: 0.5em;
+  }
+
+  div.handouts ol,
+  div.handouts ul {
+    margin-left: 1em;
+    padding-left: 0;
+  }
+  div.handouts li {
+    margin-left: 2em;
+    padding-top: 0.5em;
+  }
+
+  div.subsection, div.proposed_solutions {
+    /* Force page breaks before subsections */
+    page-break-before: right;
+    /* page breaks don't work before table-cell blocks: */
+    display: block !important;
+    /* Width is wrong because we're not using table-cell */
+    width: 95% !important;
+    /* No way to valign, so fake it */
+    top: 300px;
+    /* Fix height to twice the text font */
+    height: 6em;
+  }
+
+  div.slide.exercises:last-child {
+    page-break-after: right;
+  }
+
+  /* ToC */
+  div.toc {
+    page-break-before: right;
+  }
+
+  #toc a {
+    color: black;
+  }
+
+  #toc p {
+    text-align: left !important;
+	  font-size: 1.6em;
+  }
+
+  /* Number pages in Appendix with lower-roman numbers */
+  div.supplemental.solutions, div.appendix { page: appendix }
+
+  /* set subsection titles for Prince */
+  div.content.subsection > h1:not(.section_title), div.content.proposed_solutions > h1:not(.section_title) {
+    -weasy-string-set: doctitle content();
+  }
+
+  h1.section_title {
+    display: none;
+  }
+
+  .content {
+    font-size: 1.6em !important;
+  }
+
+  .content h2 {
+    border-bottom: none !important;
+  }
+
+  /* Force position of lastpage image */
+  .lastpage img {
+    margin-top: 7in !important;
+    margin-right: 3in !important;
+  }
+
+  /* Quiz */
+  div.form.element input[type=checkbox]:before {
+    content: '\2610';   /* BALLOT BOX */
+  }
+
+  div.form.element input[type=radio]:before {
+    content: '\25CB';  /* WHITE CIRCLE */
+  }
+
+  .quiz .notes {
+    display: none;  /* Don't display notes separator in quiz slides */
+  }
+}

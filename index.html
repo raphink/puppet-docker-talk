@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Dockerized Puppet</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
+
+  
+  <link rel="icon" href="file/_images-base/favicon.ico"/>
+  
+
+  <link rel="stylesheet" type="text/css" href=".//css/highlight/idea.css"  />
+  <link rel="stylesheet" type="text/css" href=".//css/mermaid-6.0.0.css" />
+  <link rel="stylesheet" type="text/css" href=".//css/font-awesome-4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href=".//css/introjs-2.5.local.css">
+  <link rel="stylesheet" type="text/css" href=".//css/jquery-ui-1.12.1.css">
+  <link rel="stylesheet" type="text/css" href=".//css/showoff.css?v=0.19.2" />
+  <link rel="stylesheet" type="text/css" href=".//css/zoomline-0.0.1.css">
+
+  <script type="text/javascript" src=".//js/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src=".//js/jquery-ui-1.12.1.js"></script>
+
+  <script type="text/javascript" src=".//js/jquery.cycle.all-2.8.0.js"></script>
+  <script type="text/javascript" src=".//js/jquery.batchImageLoad-1.0.0.js"></script>
+  <script type="text/javascript" src=".//js/jquery.parsequery.min-6a20f83.js"></script>
+  <script type="text/javascript" src=".//js/jquery.doubletap-4ff02c5.js"></script>
+  <script type="text/javascript" src=".//js/highlight.pack-9.2.0.js"></script>
+  <script type="text/javascript" src=".//js/jTypeWriter-1.1.js"></script>
+  <script type="text/javascript" src=".//js/bigtext-0.1.8.js"></script>
+  <script type="text/javascript" src=".//js/zoomline-0.0.1.js"></script>
+  <script type="text/javascript" src=".//js/simpleStrings-0.0.1.js"></script>
+  <script type="text/javascript" src=".//js/mermaid-6.0.0-min.js"></script>
+
+  <!-- waiting on https://github.com/usablica/intro.js/pull/727 -->
+  <script type="text/javascript" src=".//js/intro-2.5.local.js"></script>
+
+  <script type="text/javascript" src=".//js/coffee-script-1.1.3-pre.js"></script>
+
+  <script type="text/javascript" src=".//js/annotations.js?v=0.19.2"></script>
+  <script type="text/javascript" src=".//js/showoff.js?v=0.19.2"></script>
+
+  
+    <link rel="stylesheet" href=".//file/copyright.css" type="text/css"/>
+  
+    <link rel="stylesheet" href=".//file/showoff.css" type="text/css"/>
+  
+
+  
+
+  <script type="text/javascript">
+    $(function(){
+      setupPreso(false, './');
+    });
+
+    editUrl     = "";
+    interactive = false;
+    master      = false;
+
+    keymap               = {
+  "space": "NEXT",
+  "d": "DEBUG",
+  "up": "PREV",
+  "left": "PREV",
+  "pageup": "PREV",
+  "down": "NEXT",
+  "right": "NEXT",
+  "pagedown": "NEXT",
+  "R": "RELOAD",
+  "r": "REFRESH",
+  "c": "CONTENTS",
+  "t": "CONTENTS",
+  "h": "HELP",
+  "/": "HELP",
+  "?": "HELP",
+  "b": "BLANK",
+  ".": "BLANK",
+  "F": "FOOTER",
+  "f": "FOLLOW",
+  "n": "NOTES",
+  "esc": "CLEAR",
+  "p": "PAUSE",
+  "P": "PRESHOW",
+  "x": "EXECUTE",
+  "f5": "EXECUTE"
+};
+    keycode_dictionary   = {
+  "0": "\\",
+  "8": "backspace",
+  "9": "tab",
+  "12": "num",
+  "13": "enter",
+  "16": "shift",
+  "17": "ctrl",
+  "18": "alt",
+  "19": "pause",
+  "20": "caps",
+  "27": "esc",
+  "32": "space",
+  "33": "pageup",
+  "34": "pagedown",
+  "35": "end",
+  "36": "home",
+  "37": "left",
+  "38": "up",
+  "39": "right",
+  "40": "down",
+  "44": "print",
+  "45": "insert",
+  "46": "delete",
+  "48": "0",
+  "49": "1",
+  "50": "2",
+  "51": "3",
+  "52": "4",
+  "53": "5",
+  "54": "6",
+  "55": "7",
+  "56": "8",
+  "57": "9",
+  "59": ";",
+  "61": "=",
+  "65": "a",
+  "66": "b",
+  "67": "c",
+  "68": "d",
+  "69": "e",
+  "70": "f",
+  "71": "g",
+  "72": "h",
+  "73": "i",
+  "74": "j",
+  "75": "k",
+  "76": "l",
+  "77": "m",
+  "78": "n",
+  "79": "o",
+  "80": "p",
+  "81": "q",
+  "82": "r",
+  "83": "s",
+  "84": "t",
+  "85": "u",
+  "86": "v",
+  "87": "w",
+  "88": "x",
+  "89": "y",
+  "90": "z",
+  "91": "cmd",
+  "92": "cmd",
+  "93": "cmd",
+  "96": "num_0",
+  "97": "num_1",
+  "98": "num_2",
+  "99": "num_3",
+  "100": "num_4",
+  "101": "num_5",
+  "102": "num_6",
+  "103": "num_7",
+  "104": "num_8",
+  "105": "num_9",
+  "106": "num_multiply",
+  "107": "num_add",
+  "108": "num_enter",
+  "109": "num_subtract",
+  "110": "num_decimal",
+  "111": "num_divide",
+  "112": "f1",
+  "113": "f2",
+  "114": "f3",
+  "115": "f4",
+  "116": "f5",
+  "117": "f6",
+  "118": "f7",
+  "119": "f8",
+  "120": "f9",
+  "121": "f10",
+  "122": "f11",
+  "123": "f12",
+  "124": "print",
+  "144": "num",
+  "145": "scroll",
+  "173": "-",
+  "186": ";",
+  "187": "=",
+  "188": ",",
+  "189": "-",
+  "190": ".",
+  "191": "/",
+  "192": "`",
+  "219": "[",
+  "220": "\\",
+  "221": "]",
+  "222": "'",
+  "223": "`",
+  "224": "cmd",
+  "225": "alt",
+  "57392": "ctrl",
+  "63289": "num"
+};
+    keycode_shifted_keys = {
+  "0": ")",
+  "1": "!",
+  "2": "@",
+  "3": "#",
+  "4": "$",
+  "5": "%",
+  "6": "^",
+  "7": "&",
+  "8": "*",
+  "9": "(",
+  "/": "?",
+  ".": ">",
+  ",": "<",
+  "'": "\"",
+  ";": ":",
+  "[": "{",
+  "]": "}",
+  "\\": "|",
+  "`": "~",
+  "=": "+",
+  "-": "_"
+};
+    user_translations    = {
+};
+
+    I18n = new translation({"name":"Showoff Presentation","menu":{"title":"Showoff Menu","table_of_contents":"Table of Contents","downloads":"Downloads","feedback":{"label":"Send Feedback","description":"This slide is...","worst":"Terrible","best":"Awesome","why":"Why...?","send":"Send"},"pace":{"label":"The presenter should...","slower":"Slow Down","faster":"Speed Up"},"question":{"label":"Ask a Question","placeholder":"Ask a question..."},"edit":"Edit Current Slide","clear_annotations":"Clear Annotations","language":"Content Language","close":"Close","help":"Press <code>?</code> for help.","anonymous":"All features are anonymous.","sending":"Sending..."},"navigation":{"next":"Next","previous":"Previous","sync":"Sync Presentation"},"loading":"loading presentation...","activity_complete":"Activity complete","follow":{"label":"Follow Mode:"},"refresh":"Are you sure you want to refresh the slide content?\n\n(Use `RELOAD` to fully reload the entire UI)","reload":"Are you sure you want to reload Showoff?","preshow":{"prompt":"Minutes from now to start?","resume":"Resuming in:"},"tour":{"show":"See the Tour","reset":"Reset Hints","welcome":"<h3>Welcome to Showoff</h3>Let me show you around. After you finish this tour, it won't show again.","displayview":"Start by clicking this button to open the Display Window; then drag it onto the projector.","annotations":"Draw on your slides everywhere the presentation is displayed.","timer":"Set a countdown timer to help you stay on pace.","pace":"Audience members can use this to tell you if you're moving too quickly. Try to keep the indicator centered.","questions":"Questions asked by audience members are displayed here. You'll also see a count indicator on the Display Window when you have questions to answer.","notes":"Configure the notes display by zooming text, resizing the pane, or even popping it out into a new window.","slidesource":"The name of the slide is displayed here.","settings":"Would you like a different presenter layout? Choose that and other settings here.","edit":"This button will open your web-based editor--usually something like GitHub.","report":"Don't forget to report issues when you see them.","activity":{"count":"This will count down as audience members mark their activity complete. Their presentations will pause until completed.","complete":"Check this box when you're ready to move on. The presentation will pause while you're working."},"form":{"responses":"As questions are answered, they'll show up as a bar chart with the number of answers to each question on the right.","display":"Press this button to present a snapshot of the live responses on slide.","save":"Press this button to save your responses. The presentation will pause while answering."},"menu":{"start":"Click here to open the menu.","navigation":"Quickly navigate to any slide.","download":"Download presentation support files.","pace":"Provide pace feedback.","questions":"Ask live questions of the presenter.","feedback":"Provide suggestions for improving the content."}},"downloads":{"title":"File Downloads"},"help":{"title":"Help","next":"Move to the next slide.","prev":"Move to the previous slide.","contents":"Show the table of contents menu.","follow":"Toggle follow mode.","help":"Show this help dialog.","refresh":"Refresh slide content.","reload":"Completely reload Showoff.","blank":"Blank the screen.","footer":"Toggle the display footer.","notes":"Toggle notes display.","clear":"Clear code execution results.","pause":"Pause the presentation.","preshow":"Display slideshow of <tt>preshow</tt> images on a timer.","execute":"Execute the first visible code block.","debug":"Show debugging information.","close":"Close"},"stats":{"title":"Viewing Statistics","stray":"of your audience is not viewing the same slide you are.","idle":"of your audience is idle.","current":"Slides currently being viewed","elapsed":"Elapsed time spent on each slide","nodata":"No data to display.","allcurrent":"All audience members are viewing the presenter's slide."},"forms":{"display":"Display Results","save":"Save"},"presenter":{"topbar":{"annotations":"Annotations","edit":"Edit Slide","report":"Report Issue With Slide","stats":"Viewing Statistics","downloads":"Downloads","display":"Display Window","print":"Print Slides","settings":"Settings","newpage":"Open in a new page...","tooltip":{"annotations":"Enable the annotations subsystem.","edit":"Edit current slide in new window.","report":"Report an issue with the current slide.","stats":"See the slides your audience is interacting with.","downloads":"Open the file downloads in a menu or new page.","display":"Enable the Display Window; you should put this on the projector.","print":"Print slides using a new window.","settings":"Open the Settings dialog."}},"preview":{"next":"Next","previous":"Previous"},"mobile":{"update":"Update"},"notes":{"label":"Showoff Notes","personal":"Personal Notes"},"timer":{"label":"Timer:","start":"Start","pause":"Pause","resume":"Resume","cancel":"Cancel","unit":"minutes"},"pace":{"faster":"Speed Up!","slower":"Slow Down!"},"questions":"Audience Questions","annotation":{"tools":"Tools","lines":"Lines","shapes":"Shapes"},"status":{"label":"Slides:"},"settings":{"label":"Settings","close":"Close","follower":{"label":"Update Follower","tooltip":"Send slide change notifications.","description":"When this is enabled, the Showoff server will track your slide changes. Disable it to observe the presentation without inadvertently causing slide changes."},"remote":{"label":"Enable Remote","tooltip":"Enables tracking of other presenters.","description":"When this is enabled, you can load the presenter in another browser (typically on your mobile phone) to control the presentation."},"layout":{"label":"Layout","default":"Default Layout","thumbs":"Display thumbnail previews of the next and previous slides.","beside":"Display the next slide as a large preview in the main presenter view.","floating":"Open the next slide as a floating window.","confirmation":"Browser security requires confirmation before opening a new window.","open":"Open Window","cancel":"cancel","reset":{"label":"Clear Showoff settings.","tooltip":"Reset Showoff UI settings to default values."}},"language":{"label":"Content Language","tooltip":"Select from available translations, or autoselect based on your browser settings.","description":"This presentation is available in different languages. Choose the language you would like to view or leave it at <tt>automatic</tt> to use your browser settings."}},"print":{"label":"Choose type of printed notes","description":"Select the content you'd like to show under the slides.","none":"Don't include notes","notes":"Presenter Notes","handouts":"Audience Handouts"}},"language":{"auto":"Automatic","disable":"Disable Translations"},"error":{"file_not_found":"File Not Found!"}});
+
+  </script>
+
+
+  <script type="text/javascript">
+    // We want the audience members to see automatic tours. We can assume that they won't be
+    // using many server domains like the presenter might.
+    var autoTour = true;
+
+    $( document ).ready(function() {
+      tours['showoff:activity'] = [
+        {
+          element: ".currentSlide .activityToggle",
+          intro: I18n.t('tour.activity.complete')
+        }
+      ];
+
+      tours['showoff:form'] = [
+        {
+          element: ".currentSlide input.save",
+          intro: I18n.t('tour.form.save')
+        }
+      ];
+
+      tours['showoff:menu'] = [
+        {
+          element: "#hamburger",
+          intro: I18n.t('tour.menu.start')
+        },
+        {
+          element: "#navToggle",
+          intro: I18n.t('tour.menu.navigation')
+        },
+        {
+          element: "#fileDownloads",
+          intro: I18n.t('tour.menu.download')
+        },
+        {
+          element: "#paceFaster",
+          intro: I18n.t('tour.menu.pace')
+        },
+        {
+          element: "#questionToggle",
+          intro: I18n.t('tour.menu.questions')
+        },
+        {
+          element: "#feedbackToggle",
+          intro: I18n.t('tour.menu.feedback')
+        }
+      ].filter(function(item) { return (document.querySelector(item['element'])) });
+      // display tips for only the enabled features
+    });
+  </script>
+</head>
+
+<body>
+<div id="questionsIndicator"></div>
+
+<i id="hamburger" class="fa fa-bars fa-2x"></i>
+<div id="sidebarWrapper">
+    <div id="navigationHover"></div>
+    <div id="feedbackSidebar" class="sideMenu">
+    <img id="disconnected" src=".//css/disconnected.png">
+    <h3>Showoff Menu</h3>
+    <div id="navToggle" class="buttonWrapper"><i class=" fa fa-bookmark"></i> Table of Contents</div>
+    <div id="navigation" class="submenu"></div>
+    
+    <hr>
+
+    
+
+    
+
+    <div id="closeMenu" class="buttonWrapper"><i class="fa fa-close"></i> Close</div>
+    <hr>
+
+    <small>
+        <p>Press <code>?</code> for help.</p>
+        <p>All features are anonymous.</p>
+    </small>
+    </div>
+    <div id="sidebarExit"></div>
+</div>
+<div id="help-modal" title="Help">
+  <div id="help">
+    <div>
+      <span class="description">Move to the next slide.</span>
+      <span class="action">NEXT</span>
+      <span class="hotkeys"><span class="key">space</span><span class="key">down</span><span class="key">right</span><span class="key">pagedown</span></span>
+    </div>
+    <div>
+      <span class="description">Move to the previous slide.</span>
+      <span class="action">PREV</span>
+      <span class="hotkeys"><span class="key">up</span><span class="key">left</span><span class="key">pageup</span></span>
+    </div>
+    <div>
+      <span class="description">Show the table of contents menu.</span>
+      <span class="action">CONTENTS</span>
+      <span class="hotkeys"><span class="key">c</span><span class="key">t</span></span>
+    </div>
+    <div>
+      <span class="description">Toggle follow mode.</span>
+      <span class="action">FOLLOW</span>
+      <span class="hotkeys"><span class="key">f</span></span>
+    </div>
+    <div>
+      <span class="description">Show this help dialog.</span>
+      <span class="action">HELP</span>
+      <span class="hotkeys"><span class="key">h</span><span class="key">/</span><span class="key">?</span></span>
+    </div>
+
+    <hr />
+
+    <div>
+      <span class="description">Refresh slide content.</span>
+      <span class="action">REFRESH</span>
+      <span class="hotkeys"><span class="key">r</span></span>
+    </div>
+    <div>
+      <span class="description">Completely reload Showoff.</span>
+      <span class="action">RELOAD</span>
+      <span class="hotkeys"><span class="key">R</span></span>
+    </div>
+    <div>
+      <span class="description">Blank the screen.</span>
+      <span class="action">BLANK</span>
+      <span class="hotkeys"><span class="key">b</span><span class="key">.</span></span>
+    </div>
+    <div>
+      <span class="description">Toggle the display footer.</span>
+      <span class="action">FOOTER</span>
+      <span class="hotkeys"><span class="key">F</span></span>
+    </div>
+    <div>
+      <span class="description">Toggle notes display.</span>
+      <span class="action">NOTES</span>
+      <span class="hotkeys"><span class="key">n</span></span>
+    </div>
+    <div>
+      <span class="description">Clear code execution results.</span>
+      <span class="action">CLEAR</span>
+      <span class="hotkeys"><span class="key">esc</span></span>
+    </div>
+    <div>
+      <span class="description">Pause the presentation.</span>
+      <span class="action">PAUSE</span>
+      <span class="hotkeys"><span class="key">p</span></span>
+    </div>
+    <div>
+      <span class="description">Display slideshow of <tt>preshow</tt> images on a timer.</span>
+      <span class="action">PRESHOW</span>
+      <span class="hotkeys"><span class="key">P</span></span>
+    </div>
+    <div>
+      <span class="description">Execute the first visible code block.</span>
+      <span class="action">EXECUTE</span>
+      <span class="hotkeys"><span class="key">x</span><span class="key">f5</span></span>
+    </div>
+
+    <hr />
+
+    <div>
+      <span class="description">Show debugging information.</span>
+      <span class="action">DEBUG</span>
+      <span class="hotkeys"><span class="key">d</span></span>
+    </div>
+  </div>
+</div>
+
+<div id="preso"><center>loading presentation...</center></div>
+<a id="synchronize"><i class="fa fa-link" aria-hidden="true" href="#"></i> Sync Presentation</a>
+<div id="notes"></div>
+
+<footer id="footer">
+  <span id="followLabel" class="container">Follow Mode: <i id="followMode" class="fa fa-ban" aria-hidden="true"></i></span>
+  <span id="slideInfo" class="container"></span>
+  <span id="debugInfo" class="container"></span>
+  <span id="notesInfo" class="container"></span>
+  <span id="slideFilename" class="container"></span>
+  <img id="disconnected" src=".//css/disconnected.png" />
+</footer>
+
+<div id="slides" class="offscreen" style="display:none;">
+<div data-section="Dockerized" data-title="00_intro" id="Dockerized_00_intro" class="slide center cover" data-transition="none">
+<div class="content center cover" ref="Dockerized/00_intro">
+<h2>Dockerized Puppet</h2>
+<h3>A Puppet Server stack in containers</h3>
+<div style="float: right; margin-right: 1in"><img src="./file//_images-base/camptocamp_square_400.png"></div>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="05_raphink" id="Dockerized_05_raphink" class="slide noprint" data-transition="none">
+<div class="content noprint" ref="Dockerized/05_raphink">
+<h2>Raphaël Pinson</h2>
+<h1>@raphink</h1>
+<p><img src="./file//_images-base/raphink.png" alt="Raphink"></p>
+<ul>
+<li>Infrastructure Developer</li>
+<li>Devops Enthusiast</li>
+<li>Augeas Developer</li>
+</ul>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="06_camptocamp" id="Dockerized_06_camptocamp" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/06_camptocamp">
+<h2>Camptocamp</h2>
+<ul>
+<li>Open-Source Specialist</li>
+<li>4 departments: Geospatial, Business, Infrastructure &amp; Subscriptions</li>
+<li>present in Switzerland, France and Germany.</li>
+<li>involved in Puppet since 2007</li>
+</ul>
+<p><img src="./file//_images/c2c_offices.png" alt="Camptocamp Offices"></p>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="07_puppet_on_docker" id="Dockerized_07_puppet_on_docker" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/07_puppet_on_docker">
+<h2>Puppet on Docker</h2>
+<p>As done at Camptocamp since 2016</p>
+<p><img src="./file//_images/puppet_rancher_tshirts.jpeg" alt="Puppet on Docker"></p>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="08_why" id="Dockerized_08_why" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/08_why">
+<h2>Why?</h2>
+<ul>
+<li>2015: Puppet 4 ⇒ AIO packages</li>
+<li>Multiple Puppet Stack installers</li>
+<li>Chicken and egg problem</li>
+</ul>
+<p><img src="./file//_images/easter-633670_1920.jpg" alt="Chicken and egg"></p>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="09_architecture" id="Dockerized_09_architecture" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/09_architecture">
+<h2>Stack Architecture</h2>
+<p>Various options:</p>
+<ul>
+<li>using a simple git hook on a single node (used in courses)</li>
+<li>using MCollective on a cluster of nodes (used in production):</li>
+</ul>
+<p><img src="./file//_images/puppet-rancher_simple.png" alt="Stack Architecture"></p>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="10_containers" id="Dockerized_10_containers1" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/10_containers:1">
+<h2>Containers: Puppetserver</h2>
+<ul>
+<li>function: Puppet CA and/or compile nodes</li>
+<li>image: <code>camptocamp/puppetserver</code>
+</li>
+<li>autoconfiguration: puppetdb-termini activated if <code>puppetdb</code> name resolves</li>
+</ul>
+<p><img src="./file//_images/puppet.png" alt="Puppet"></p>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="10_containers" id="Dockerized_10_containers2" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/10_containers:2">
+<h2>Containers: R10k</h2>
+<ul>
+<li>function: Deploy Puppet code in all Puppet Server containers.</li>
+</ul>
+<p>Two options:</p>
+<ul>
+<li>
+<p>single node:</p>
+<ul>
+<li>image: <code>camptocamp/r10k-githook</code> (sshd with a Git hook)</li>
+</ul>
+</li>
+<li>
+<p>cluster of nodes:</p>
+<ul>
+<li>images: <code>camptocamp/r10k</code> (using MCollective) + <code>camptocamp/r10k-webhook</code> (webhook to trigger r10k over MCollective)</li>
+</ul>
+</li>
+</ul>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="10_containers" id="Dockerized_10_containers3" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/10_containers:3">
+<h2>Containers: PuppetDB</h2>
+<ul>
+<li>function: PuppetDB (requires a PostgreSQL database)</li>
+<li>image: <code>camptocamp/puppetdb</code>
+</li>
+<li>optionally supports RW/RO databases</li>
+</ul>
+<p><img src="./file//_images/puppet.png" alt="Puppet"></p>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="10_containers" id="Dockerized_10_containers4" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/10_containers:4">
+<h2>Containers: MCollective helpers</h2>
+<ul>
+<li>function: pilot Puppet CA and PuppetDB from outside the stack using MCollective</li>
+<li>images: <code>camptocamp/mcollectived-puppetca</code> and
+<code>camptocamp/mcollectived-node</code>
+</li>
+<li>Now fully automated using Terraform with
+<a href="https://github.com/camptocamp/terraform-provider-puppetca" target="_blank">PuppetCA</a>
+and <a href="https://github.com/camptocamp/terraform-provider-puppetdb" target="_blank">PuppetDB</a> providers</li>
+</ul>
+<p><img src="./file//_images/choria.png" alt="Choria"></p>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="10_containers" id="Dockerized_10_containers5" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/10_containers:5">
+<h2>Containers: Puppetboard</h2>
+<ul>
+<li>function: provide a web interface to visualize PuppetDB data and reports</li>
+<li>image: <code>camptocamp/puppetboard</code>
+</li>
+</ul>
+<p><img src="./file//_images/puppetboard.png" alt="Puppetboard"></p>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="10_containers" id="Dockerized_10_containers6" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/10_containers:6">
+<h2>Containers: Puppet Catalog Diff</h2>
+<ul>
+<li>function: compute catalog diffs between Puppet environments/servers and
+visualize the diffs</li>
+<li>images: <code>camptocamp/puppet-catalog-diff</code> and
+<code>camptocamp/puppet-catalog-diff-viewer</code>
+</li>
+</ul>
+<p><img src="./file//_images/puppet-catalog-diff-viewer.png" alt="Puppet Catalog Diff"></p>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="15_testing" id="Dockerized_15_testing1" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/15_testing:1">
+<h2>Testing Containers</h2>
+<ul>
+<li>
+<strong>Disclaimer:</strong> not all the Puppet containers are actually tested</li>
+<li>
+<strong>Principle:</strong> use rspec + serverspec to test Dockerfiles</li>
+<li>
+<strong>Example</strong> with <code>docker-puppetboard</code>:</li>
+</ul>
+<pre class="highlight"><code class="language-ruby">require "serverspec"
+require "docker"
+
+describe "Dockerfile" do
+  before(:all) do
+    # See https://github.com/swipely/docker-api/issues/106
+    Excon.defaults[:write_timeout] = 1000
+    Excon.defaults[:read_timeout] = 1000
+    image = Docker::Image.build_from_dir('.')
+
+    set :os, family: :debian
+    set :backend, :docker
+    set :docker_image, image.id
+    set :docker_container_create_options, { "Privileged" =&gt; true }
+  end
+
+  describe file('/app/puppetboard/app.py') do
+    it { is_expected.to be_file }
+  end
+end
+</code></pre>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="15_testing" id="Dockerized_15_testing2" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/15_testing:2">
+<h2>Testing the Puppetserver Container</h2>
+<p>Testing files and commands:</p>
+<pre class="highlight"><code class="language-ruby">describe file('/etc/puppetlabs/puppet/puppet.conf') do
+  it { is_expected.to be_file }
+end
+
+describe command('/opt/puppetlabs/bin/puppet -V') do
+  its(:exit_status) { is_expected.to eq 0 }
+  its(:stdout) { is_expected.to match(/^4\.\d+.\d+\n$/) }
+end
+
+describe command('/opt/puppetlabs/bin/puppetserver gem list') do
+  its(:exit_status) { is_expected.to eq 0 }
+  its(:stdout) { is_expected.to match(/\bruby_gpg\b/) }
+  its(:stdout) { is_expected.to match(/\bhiera-eyaml-gpg\b/) }
+end
+
+describe command('/opt/puppetlabs/bin/puppet master --configprint strict_variables') do
+  its(:exit_status) { is_expected.to eq 0 }
+  its(:stdout) { is_expected.to eq("true\n") }
+end
+
+describe file('/check_csr.rb') do
+  it { is_expected.to be_file }
+end
+
+describe command('/opt/puppetlabs/bin/puppet master --configprint autosign') do
+  its(:exit_status) { is_expected.to eq 0 }
+  its(:stdout) { is_expected.to eq("/check_csr.rb\n") }
+end
+</code></pre>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="15_testing" id="Dockerized_15_testing3" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/15_testing:3">
+<h2>Testing the Puppetserver Container: output</h2>
+<pre class="highlight"><code class="language-shell">$ bundle exec rspec -fd
+
+Dockerfile
+  File "/etc/puppetlabs/puppet/puppet.conf"
+    should be file
+  Command "/opt/puppetlabs/bin/puppet -V"
+    exit_status
+      should eq 0
+    stdout
+      should match /^4\.\d+.\d+\n$/
+  Command "/opt/puppetlabs/bin/puppetserver gem list"
+    exit_status
+      should eq 0
+    stdout
+      should match /\bruby_gpg\b/
+    stdout
+      should match /\bhiera-eyaml-gpg\b/
+  Command "/opt/puppetlabs/bin/puppet master --configprint strict_variables"
+    exit_status
+      should eq 0
+    stdout
+      should eq "true\n"
+  File "/check_csr.rb"
+    should be file
+  Command "/opt/puppetlabs/bin/puppet master --configprint autosign"
+    exit_status
+      should eq 0
+    stdout
+      should eq "/check_csr.rb\n"
+
+Finished in 20.99 seconds (files took 0.39334 seconds to load)
+11 examples, 0 failures
+</code></pre>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="15_testing" id="Dockerized_15_testing4" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/15_testing:4">
+<h2>CI/CD</h2>
+<ul>
+<li>build</li>
+<li>test</li>
+<li>ship</li>
+</ul>
+<pre class="highlight"><code class="language-yaml">---
+language: ruby
+sudo: required
+services: docker
+cache: bundler
+script:
+  - ./.build.sh
+  - bundle exec rspec -fd
+after_success:
+  - ./.publish.sh
+</code></pre>
+<p><img src="./file//_images/container_travis.png" alt="Container Test on Travis CI"></p>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="20_compose" id="Dockerized_20_compose1" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/20_compose:1">
+<h2>Docker Compose — Volumes</h2>
+<ul>
+<li>Code (git + checkout)</li>
+<li>PostgreSQL (when the database is a container)</li>
+</ul>
+<pre class="highlight"><code class="language-yaml">volumes:
+  datacode: {}
+  datagit: {}
+  datar10kcache: {}
+  datapostgresql: {}
+</code></pre>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="20_compose" id="Dockerized_20_compose2" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/20_compose:2">
+<h2>Docker Compose — Puppet Master</h2>
+<pre class="highlight"><code class="language-yaml">---
+version: "2"
+services:
+  puppetmaster:
+    image: 'camptocamp/puppetserver:2.7.2-5'
+    environment:
+      JAVA_ARGS: '-Xmx2g -Xms2g -XX:MaxPermSize=256m -XX:OnOutOfMemoryError="kill -9 %p" -Djava.security.egd=/dev/urandom'
+      AUTOSIGN_PSK: 'HelloGhent'
+    hostname: 'master.c2c'
+    ports:
+      - '8140:8140'
+    volumes:
+      - './puppetca:/etc/puppetlabs/puppet/ssl'
+    volumes_from:
+      - 'r10k'
+</code></pre>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="20_compose" id="Dockerized_20_compose3" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/20_compose:3">
+<h2>Docker Compose — R10k</h2>
+<pre class="highlight"><code class="language-yaml">  r10k:
+    image: 'camptocamp/r10k-githook:2.5.2-3'
+    ports:
+      - '2222:22'
+    volumes:
+      - 'datacode:/etc/puppetlabs/code/environments/'
+      - 'datagit:/srv/puppetmaster.git/'
+      - 'datar10kcache:/opt/puppetlabs/r10k/cache/'
+      - './authorized_keys:/opt/puppetlabs/r10k/.ssh/authorized_keys:ro'
+
+
+  # Optional, browse code
+  cgit:
+    image: 'oems/cgit'
+    ports:
+      - '8022:80'
+    volumes:
+      - 'datagit:/mnt/git/puppetmaster.git:ro'
+</code></pre>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="20_compose" id="Dockerized_20_compose4" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/20_compose:4">
+<h2>Docker Compose — PuppetDB</h2>
+<pre class="highlight"><code class="language-yaml">  postgresql:
+    image: 'postgres:9.4'
+    environment:
+      POSTGRES_USER: 'puppetdb'
+      POSTGRES_PASSWORD: 'puppetdb'
+    volumes:
+      - 'datapostgresql:/var/lib/postgresql/data/'
+  
+  puppetdb:
+    image: 'camptocamp/puppetdb:4.3.2-1'
+    environment:
+      ENABLE_HTTP: 'true'
+      JAVA_ARGS: '-Xmx512m -Xms512m -XX:OnOutOfMemoryError="kill -9 %p" -Djava.security.egd=/dev/urandom'
+    links:
+      - 'postgresql'
+    volumes:
+      - './puppetca/certs/ca.pem:/etc/puppetlabs/puppetdb/ssl/ca.pem:ro'
+      - './puppetca/private_keys/puppetdb.pem:/etc/puppetlabs/puppetdb/ssl/private.pem'
+      - './puppetca/certs/puppetdb.pem:/etc/puppetlabs/puppetdb/ssl/public.pem'
+</code></pre>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="20_compose" id="Dockerized_20_compose5" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/20_compose:5">
+<h2>Docker Compose — Puppetboard</h2>
+<pre class="highlight"><code class="language-yaml">  puppetboard:
+    image: 'camptocamp/puppetboard:0.2.2-gitdf91583-1'
+    environment:
+      PUPPETBOARD_SETTINGS: "/app/settings.py"
+    command: '--mount-point / wsgi.py'
+    ports:
+      - '80:80'
+</code></pre>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="30_rancher" id="Dockerized_30_rancher1" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/30_rancher:1">
+<h2>Deployment on Rancher</h2>
+<ul>
+<li>Scaling on multiple nodes</li>
+<li>Catalog Template on <a href="https://github.com/camptocamp/camptocamp-rancher-catalog" target="_blank">GitHub</a>
+</li>
+</ul>
+<p><img src="./file//_images/puppet_rancher.png" alt="Puppet Rancher"></p>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="30_rancher" id="Dockerized_30_rancher2" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/30_rancher:2">
+<h2>Automating Rancher with Terraform</h2>
+<pre class="highlight"><code class="language-ruby">resource "rancher_stack" "puppet" {
+  name            = "puppet"
+  environment_id  = "a123"
+  catalog_id      = "camptocamp:puppet:165"
+  start_on_create = true
+  finish_upgrade  = true
+  depends_on      = ["rancher_stack.postgres-cluster"]
+
+  environment {
+    "ACTIVEMQ_DNS_ALT_NAMES"       = "activemq.example.com"
+    "AUTH_CONF_ALLOW_CATALOG"      = "catalog_diff"
+    "AUTOSIGN_PSK"                 = "HelloGhentPSK"
+    "CA_CRT"                       = "${file("puppet/ca.crt")}"
+    "CA_DNS_ALT_NAMES"             = "puppetca,puppetca.example.com"
+    "CA_KEY"                       = "${file("puppet/ca.key")}"
+    "DB_DNS_ALT_NAMES"             = "puppetdb,puppetdb.example.com"
+    "DNS_ALT_NAMES"                = "puppet,puppet.example.com"
+    "GITHUB_ORG"                   = "camptocamp"
+    "GITHUB_TEAM"                  = "infrateam"
+    "GITHUB_TOKEN"                 = "&lt;gh_token&gt;"
+    "GPG_KEY"                      = "${file("puppet/gpg_key.asc")}"
+    "MCOLLECTIVE_SERVER_KEY"       = "${file("puppet/mcollective_server.key")}"
+    "PUPPETBOARD_TAG"              = "0.2.0-1"
+    "PUPPETCA_JAVA_ARGS"           = "-XX:OnOutOfMemoryError=\"kill -9 %p\" -Djava.security.egd=/dev/urandom -Xmx2g -Xms2g -XX:MaxPermSize=256m"
+    "PUPPETDB_JAVA_ARGS"           = "-XX:OnOutOfMemoryError=\"kill -9 %p\" -Djava.security.egd=/dev/urandom -Xmx1g"
+    "PUPPETDB_POSTGRES_PASSWORD"   = "PostgresGhentPass"
+    "PUPPETDB_POSTGRES_RO_SUBNAME" = "//postgresql:5433/puppetdb"
+    "PUPPETDB_POSTGRES_SERVICE"    = "postgres-cluster/lb"
+    "PUPPETDB_POSTGRES_USER"       = "puppetdb"
+    "PUPPET_JAVA_ARGS"             = "-XX:OnOutOfMemoryError=\"kill -9 %p\" -Djava.security.egd=/dev/urandom -Xmx4g -Xms4g -XX:MaxPermSize=256m"
+    "R10K_REMOTE"                  = "ssh://git@git.example.com/infra/control-repo.git"
+    "RSA_PRIVATE_KEY"              = "${file("puppet/r10k_rsa.key")}"
+    "STOMP_PASSWORD"               = "StompGhentPass"
+    "WEBHOOK_SECRET"               = "WebhookGhentSec"
+  }
+}
+</code></pre>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="60_openshift" id="Dockerized_60_openshift1" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/60_openshift:1">
+<h2>Puppet on Openshift</h2>
+<ul>
+<li>in development, currently internal @ Camptocamp</li>
+<li>plans for our migration from Puppet 4 to Puppet 5</li>
+</ul>
+<p><img src="./file//_images/puppet_openshift_github.png" alt="Puppet Openshift Github"></p>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="60_openshift" id="Dockerized_60_openshift2" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/60_openshift:2">
+<h2>Puppet on Openshift: charts</h2>
+<ul>
+<li>3 Puppet charts currently: Puppetserver, PuppetDB &amp; R10k-webhook</li>
+</ul>
+<p><img src="./file//_images/puppet_openshift_charts.png" alt="Puppet Openshift Charts"></p>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="60_openshift" id="Dockerized_60_openshift3" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/60_openshift:3">
+<h2>Puppet on Openshift: advantages</h2>
+<p>Charts take advantage of ImageStreams, ConfigMaps &amp; Secrets (among others)</p>
+<p><img src="./file//_images/openshift_puppetserver_templates.png" alt="OpenShift Puppetserver templates"></p>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="90_questions" id="Dockerized_90_questions" class="slide" data-transition="none">
+<div class="content " ref="Dockerized/90_questions">
+<h2>Questions?</h2>
+<p><img src="./file//_images/questions.png" alt="Questions"></p>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+<div data-section="Dockerized" data-title="99_outro" id="Dockerized_99_outro" class="slide center lastpage" data-transition="none">
+<div class="content center lastpage" ref="Dockerized/99_outro">
+<p><img src="./file//_images-base/camptocamp_outro_800.png" alt="Camptocamp"></p>
+</div>
+<canvas class="annotations"></canvas>
+</div>
+</div>
+<div id="buttonNav">
+  <div id="buttonPrev"><i class="fa fa-chevron-left fa-lg"></i> Previous</div><div id="buttonNext">Next <i class="fa fa-chevron-right fa-lg"></i></div>
+</div>
+<div id="pauseScreen">
+  PAUSED
+</div>
+
+</body>
+</html>
