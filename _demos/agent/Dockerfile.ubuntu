@@ -1,0 +1,13 @@
+FROM ubuntu:16.04
+
+ENV PATH=/opt/puppetlabs/server/bin:/opt/puppetlabs/puppet/bin:/opt/puppetlabs/bin:$PATH
+
+RUN apt-get update && apt-get install -y wget
+
+RUN wget http://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb \
+    && dpkg -i puppetlabs-release-pc1-xenial.deb \
+    && apt-get update \
+    && apt-get install -y puppet-agent \
+    && rm -f puppetlabs-release-pc1-xenial.deb
+
+ENTRYPOINT [ "/sbin/init" ]
