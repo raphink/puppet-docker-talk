@@ -1,1 +1,19 @@
-common/docker-compose.yml
+---
+version: '2.0'
+services:
+  showoff:
+    image: binford2k/showoff:0.19.3
+    ports:
+      - "9090:9090"
+    volumes:
+      - ".:/var/cache/showoff"
+    command: showoff serve -f ${PROJECT}.json
+
+  weasyprint:
+    image: aquavitae/weasyprint
+    volumes:
+      - ".:/data"
+      - "./common/_fonts:/usr/local/share/fonts:ro"
+    links:
+      - "showoff:showoff"
+  # docker-compose exec weasyprint weasyprint -s /data/common/print.css http://showoff:9090/print /data/test.pdf
